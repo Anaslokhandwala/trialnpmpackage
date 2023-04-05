@@ -1,4 +1,4 @@
-package com.accurakycexample;
+package accurascan.hybrid.com;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

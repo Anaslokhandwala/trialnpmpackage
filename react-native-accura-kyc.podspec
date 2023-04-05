@@ -11,13 +11,16 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "11.0" }
+  s.platforms    = { :ios => "12.0" }
+  s.ios.deployment_target = '12.0'
   s.source       = { :git => "https://s.s.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
+  s.resources = "ios/**/*.{png,jpeg,jpg,xib,xcassets,imageset,gif,mp3,storyboard}"
 
   s.dependency "React-Core"
-
+  s.static_framework = true
+  s.dependency "AccuraOCRSDK","4.0.0"
   # Don't install the dependencies when we run `pod install` in the old architecture.
   if ENV['RCT_NEW_ARCH_ENABLED'] == '1' then
     s.compiler_flags = folly_compiler_flags + " -DRCT_NEW_ARCH_ENABLED=1"

@@ -1,7 +1,10 @@
 buildscript {
   repositories {
-    google()
-    mavenCentral()
+      google()
+      mavenLocal()
+      mavenCentral()
+      jcenter()
+      maven { url 'https://jitpack.io' }
   }
 
   dependencies {
@@ -34,7 +37,23 @@ android {
     minSdkVersion getExtOrIntegerDefault("minSdkVersion")
     targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
     buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+    ndk {
+        // Specify CPU architecture.
+        // 'armeabi-v7a' & 'arm64-v8a' are respectively 32 bit and 64 bit device architecture
+        // 'x86' & 'x86_64' are respectively 32 bit and 64 bit emulator architecture
+        abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+    }
   }
+
+  splits {
+      abi {
+          reset()
+          universalApk false  // If true, also generate a universal APK
+          // include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+          include "armeabi-v7a", "x86"
+      }
+  }
+
   buildTypes {
     release {
       minifyEnabled false
@@ -50,6 +69,19 @@ android {
     targetCompatibility JavaVersion.VERSION_1_8
   }
 
+    packagingOptions {
+        pickFirst 'lib/arm64-v8a/libcrypto.so'
+        pickFirst 'lib/arm64-v8a/libssl.so'
+
+        pickFirst 'lib/armeabi-v7a/libcrypto.so'
+        pickFirst 'lib/armeabi-v7a/libssl.so'
+
+        pickFirst 'lib/x86/libcrypto.so'
+        pickFirst 'lib/x86/libssl.so'
+
+        pickFirst 'lib/x86_64/libcrypto.so'
+        pickFirst 'lib/x86_64/libssl.so'
+	}
 }
 
 repositories {
@@ -63,6 +95,26 @@ dependencies {
   // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native"
+
+// START Additional dependencies for accura scan
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+  // implementation 'androidx.appcompat:appcompat:1.6.0'
+  // implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+  // testImplementation 'junit:junit:4.13.2'
+  // androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+  // androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+  // implementation 'com.google.android.material:material:1.6.0-alpha01'
+  // // Glide
+  // implementation 'com.github.bumptech.glide:glide:4.11.0'
+  // annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+  // For Accura OCR SDK
+  implementation 'com.github.accurascan:AccuraOCR:5.1.0'
+  // For Accura Face match
+  implementation 'com.github.accurascan:AccuraFaceMatch:3.2.0'
+  // for liveness
+  implementation 'com.github.accurascan:Liveness-Android:3.2.0'
+// END Additional dependencies for accura scan
 }
 
 if (isNewArchitectureEnabled()) {

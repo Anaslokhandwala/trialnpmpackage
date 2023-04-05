@@ -1,4 +1,4 @@
-package com.accurakycexample;
+package accurascan.hybrid.com;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

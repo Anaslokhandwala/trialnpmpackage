@@ -2,9 +2,29 @@
 
 @interface RCT_EXTERN_MODULE(AccuraKyc, NSObject)
 
-RCT_EXTERN_METHOD(multiply:(float)a withB:(float)b
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(getMetaData:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(setupAccuraConfig:(NSArray *)argsNew callback:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(startMRZ:(NSArray *)argsNew callback:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(startOcrWithCard:(NSArray *)argsNew callback:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(startBarcode:(NSArray *)argsNew callback:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(startBankCard:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(startLiveness:(NSArray *)argsNew callback:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(startFaceMatch:(NSArray *)argsNew callback:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(startFaceMatch1:(NSArray *)argsNew callback:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(startFaceMatch2:(NSArray *)argsNew callback:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(openGallery1:(NSArray *)argsNew callback:(RCTResponseSenderBlock)callback)
+
+RCT_EXTERN_METHOD(openGallery2:(NSArray *)argsNew callback:(RCTResponseSenderBlock)callback)
 
 + (BOOL)requiresMainQueueSetup
 {
